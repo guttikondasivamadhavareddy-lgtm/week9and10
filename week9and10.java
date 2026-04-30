@@ -1,27 +1,32 @@
+import java.util.Scanner;
+
 public class week9and10 {
 
-    // Method to generate exception
-    static void generateException() {
-        String text = null;
-        System.out.println(text.length()); // ❌ NullPointerException
-    }
+    static int findLength(String text) {
+        int count = 0;
 
-    // Method to handle exception
-    static void handleException() {
         try {
-            String text = null;
-            System.out.println(text.length());
-        } catch (NullPointerException e) {
-            System.out.println("Exception handled: " + e);
+            while (true) {
+                text.charAt(count); // keep accessing until exception
+                count++;
+            }
+        } catch (Exception e) {
+            // exception occurs when index is out of bounds
         }
+
+        return count;
     }
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        // Uncomment this to see exception crash
-        // generateException();
+        System.out.print("Enter string: ");
+        String text = sc.next();
 
-        // Correct way (handled)
-        handleException();
+        int len1 = findLength(text);
+        int len2 = text.length();
+
+        System.out.println("Length using charAt(): " + len1);
+        System.out.println("Length using built-in: " + len2);
     }
 }
