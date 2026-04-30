@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class week9and10 {
 
+    // Find length without using length()
     static int findLength(String text) {
         int count = 0;
         try {
@@ -13,40 +14,34 @@ public class week9and10 {
         return count;
     }
 
-    static int countWords(String text) {
-        int count = 1;
-        for (int i = 0; i < findLength(text); i++) {
-            if (text.charAt(i) == ' ') count++;
-        }
-        return count;
-    }
+    // Find unique characters
+    static char[] findUniqueChars(String text) {
 
-    static String[] splitText(String text) {
-        int words = countWords(text);
-        String[] result = new String[words];
-
+        int len = findLength(text);
+        char[] temp = new char[len];
         int index = 0;
-        String word = "";
 
-        for (int i = 0; i < findLength(text); i++) {
-            if (text.charAt(i) != ' ') {
-                word += text.charAt(i);
-            } else {
-                result[index++] = word;
-                word = "";
+        for (int i = 0; i < len; i++) {
+            char current = text.charAt(i);
+            boolean isUnique = true;
+
+            // check previous characters
+            for (int j = 0; j < i; j++) {
+                if (current == text.charAt(j)) {
+                    isUnique = false;
+                    break;
+                }
+            }
+
+            if (isUnique) {
+                temp[index++] = current;
             }
         }
-        result[index] = word;
 
-        return result;
-    }
-
-    static String[][] wordsWithLength(String[] words) {
-        String[][] result = new String[words.length][2];
-
-        for (int i = 0; i < words.length; i++) {
-            result[i][0] = words[i];
-            result[i][1] = String.valueOf(findLength(words[i]));
+        // create final array of exact size
+        char[] result = new char[index];
+        for (int i = 0; i < index; i++) {
+            result[i] = temp[i];
         }
 
         return result;
@@ -56,16 +51,13 @@ public class week9and10 {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter text: ");
-        String text = sc.nextLine();
+        String text = sc.next();
 
-        String[] words = splitText(text);
-        String[][] table = wordsWithLength(words);
+        char[] unique = findUniqueChars(text);
 
-        System.out.println("\nWord\tLength");
-
-        for (int i = 0; i < table.length; i++) {
-            int length = Integer.parseInt(table[i][1]);
-            System.out.println(table[i][0] + "\t" + length);
+        System.out.print("Unique characters: ");
+        for (char c : unique) {
+            System.out.print(c + " ");
         }
     }
 }
