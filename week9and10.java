@@ -13,7 +13,6 @@ public class week9and10 {
         return count;
     }
 
-    // Count words
     static int countWords(String text) {
         int count = 1;
         for (int i = 0; i < findLength(text); i++) {
@@ -22,7 +21,6 @@ public class week9and10 {
         return count;
     }
 
-    // Split manually
     static String[] splitText(String text) {
         int words = countWords(text);
         String[] result = new String[words];
@@ -43,13 +41,15 @@ public class week9and10 {
         return result;
     }
 
-    static boolean compareArrays(String[] a, String[] b) {
-        if (a.length != b.length) return false;
+    static String[][] wordsWithLength(String[] words) {
+        String[][] result = new String[words.length][2];
 
-        for (int i = 0; i < a.length; i++) {
-            if (!a[i].equals(b[i])) return false;
+        for (int i = 0; i < words.length; i++) {
+            result[i][0] = words[i];
+            result[i][1] = String.valueOf(findLength(words[i]));
         }
-        return true;
+
+        return result;
     }
 
     public static void main(String[] args) {
@@ -58,11 +58,14 @@ public class week9and10 {
         System.out.print("Enter text: ");
         String text = sc.nextLine();
 
-        String[] arr1 = splitText(text);
-        String[] arr2 = text.split(" ");
+        String[] words = splitText(text);
+        String[][] table = wordsWithLength(words);
 
-        boolean result = compareArrays(arr1, arr2);
+        System.out.println("\nWord\tLength");
 
-        System.out.println("Both methods give same result: " + result);
+        for (int i = 0; i < table.length; i++) {
+            int length = Integer.parseInt(table[i][1]);
+            System.out.println(table[i][0] + "\t" + length);
+        }
     }
 }
